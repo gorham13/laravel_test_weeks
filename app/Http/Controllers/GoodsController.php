@@ -37,14 +37,13 @@ class GoodsController extends Controller
 
         $goods = Goods::create($input);
 
-        return redirect('index');
+        return redirect('goods');
     }
 
     public function index(Request $request)
     {
         $category = request()->get('category', '');
         $characteristic = request()->get('characteristic', '');
-        //dd([$category, $characteristic]);
         $goods = Goods::where('goods.category', 'like', '%'.$category.'%')
             ->Where('goods.characteristic', 'like', '%'.$characteristic.'%')->paginate(10);
         if ($goods)
@@ -61,6 +60,8 @@ class GoodsController extends Controller
 
     public function postUpdate(Request $request)
     {
+
+
         $input = $request::all();
         $validator = Validator::make($input, [
             'name' => 'required|string|max:255',
@@ -76,12 +77,20 @@ class GoodsController extends Controller
 
         $goods = Goods::find($input['id']);
 
+        if(request()->hasFile('image'))
+        {
+            $input['photo'] = request()->file('image')->store('images');
+
+            if($goods['photo'])
+                \Storage::delete( $goods['photo']);
+        }
+
         $goods->update($input);
 
         return redirect('goods/');
     }
 
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $goods = Goods::find($id);
         if(!$goods){

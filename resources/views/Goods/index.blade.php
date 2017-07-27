@@ -30,14 +30,18 @@
                     <div class="panel-body">
                         @foreach($goods as $good)
                             <div class="col-md-4">
-                                <p>{{asset($good->photo)}}</p>
-                                <img src="{{asset($good->photo)}}" alt="image not found" width="100%"><br>
+                                <img src="{{'storage/'.$good->photo}}" alt="image not found" width="100%"><br>
                                 <p>{{$good->name}}</p>
-                                <a href="/goods/update/{{$good->id}}" class="btn btn-primary" role="button">Update</a>
-                                <a href="/goods/delete/{{$good->id}}" class="btn btn-danger" role="button">Delete</a>
+                                <form method="post" action="goods/delete/{{$good->id}}">
+                                    {{csrf_field()}}
+                                    {{method_field('DELETE')}}
+                                    <a href="/goods/update/{{$good->id}}" class="btn btn-primary" role="button">Update</a>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </div>
                         @endforeach
                     </div>
+
                     {!! $goods->render() !!}
                 </div>
             </div>
