@@ -35,10 +35,11 @@
                         @foreach($goods as $good)
                             <a href="good/{{$good->id}}">
                                 <div class="col-md-4" style="height: 250px">
-                                    @if(!$good['photo'])
-                                        {{$good['photo'] = 'images/tmp.jpg'}}
+                                    @if($good['photo'])
+                                        <img src="{{asset('storage/'.$good->photo)}}" alt="image not found" width="100%"><br>
+                                    @else
+                                        <img src="{{asset('storage/images/tmp.jpg')}}" alt="image not found" width="100%"><br>
                                     @endif
-                                    <img src="{{asset('storage/'.$good->photo)}}" alt="image not found" width="100%"><br>
                                     <div style="position: absolute; bottom: 20px;">
                                         <h3>{{$good->name}}</h3>
                                         <form method="post" action="goods/delete/{{$good->id}}" >

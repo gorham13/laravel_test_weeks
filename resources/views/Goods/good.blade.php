@@ -7,10 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>{{$good->name}}</h3></div>
                     <div class="panel-body" align="center">
-                        @if(!$good['photo'])
-                            {{$good['photo'] = 'images/tmp.jpg'}}
+                        @if($good['photo'])
+                            <img src="{{asset('storage/'.$good->photo)}}" alt="image not found" width="100%"><br>
+                        @else
+                            <img src="{{asset('storage/images/tmp.jpg')}}" alt="image not found" width="100%"><br>
                         @endif
-                        <img src="{{asset('storage/'.$good->photo)}}" alt="image not found" width="100%"><br>
                         <p>{{$good->characteristic}}</p>
                         <p>Price: {{$good->price}}</p>
                     </div>
