@@ -25,4 +25,5 @@ Route::get('goods', 'GoodsController@index');
 Route::delete('goods/delete/{id}', 'GoodsController@delete');
 Route::get('goods/update/{id}', 'GoodsController@update');
 Route::put('goods/update/{id}', 'GoodsController@postUpdate');
+Route::get('/good/{id}', 'GoodsController@get');
 

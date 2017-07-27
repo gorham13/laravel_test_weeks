@@ -25,20 +25,31 @@
             </div>
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Goods</div>
+                    <div class="panel-heading">
+                        Goods
+                        <a href="/goods/create" class="btn btn-success pull-right btn-sm" role="button">Create</a>
+
+                    </div>
 
                     <div class="panel-body">
                         @foreach($goods as $good)
-                            <div class="col-md-4">
-                                <img src="{{'storage/'.$good->photo}}" alt="image not found" width="100%"><br>
-                                <p>{{$good->name}}</p>
-                                <form method="post" action="goods/delete/{{$good->id}}">
-                                    {{csrf_field()}}
-                                    {{method_field('DELETE')}}
-                                    <a href="/goods/update/{{$good->id}}" class="btn btn-primary" role="button">Update</a>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
+                            <a href="good/{{$good->id}}">
+                                <div class="col-md-4" style="height: 250px">
+                                    @if(!$good['photo'])
+                                        {{$good['photo'] = 'images/tmp.jpg'}}
+                                    @endif
+                                    <img src="{{asset('storage/'.$good->photo)}}" alt="image not found" width="100%"><br>
+                                    <div style="position: absolute; bottom: 20px;">
+                                        <h3>{{$good->name}}</h3>
+                                        <form method="post" action="goods/delete/{{$good->id}}" >
+                                            {{csrf_field()}}
+                                            {{method_field('DELETE')}}
+                                            <a href="/goods/update/{{$good->id}}" class="btn btn-primary" role="button">Update</a>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </a>
                         @endforeach
                     </div>
 

@@ -45,9 +45,10 @@ class GoodsController extends Controller
         $category = request()->get('category', '');
         $characteristic = request()->get('characteristic', '');
         $goods = Goods::where('goods.category', 'like', '%'.$category.'%')
-            ->Where('goods.characteristic', 'like', '%'.$characteristic.'%')->paginate(10);
+            ->Where('goods.characteristic', 'like', '%'.$characteristic.'%')->paginate(9);
         if ($goods)
-        return view('Goods/index', compact('goods'));
+            return view('Goods/index', compact('goods'));
+        else return response()->json(null, 204);
     }
 
     public function update($id)
@@ -110,5 +111,11 @@ class GoodsController extends Controller
 
 
         return response()->json($tags);
+    }
+
+    public function get($id)
+    {
+        $good = Goods::find($id);
+        return view('Goods/good', compact('good'));
     }
 }
